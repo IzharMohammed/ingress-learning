@@ -13,8 +13,16 @@ app.get('/api/data', (req, res) => {
   res.json({
     success: true,
     data: {
-      message: 'Hello from the Express backend!',
-      items: [1, 2, 3, 4, 5],
+      // message: 'Hello from the Express backend!',
+      // items: [1, 2, 3, 4, 5],
+      message: `Hello Muskaan. Kya krri tu?
+               April Fool sunday monday go to school! 😈
+               chi hona mujhe, nana bais bhi!
+               mai akela khelletu, soot phenleko! 🩲
+              mujhe akela khellena pasand!
+              tujhe maartu mai timepass ku!
+              Chappalan bhi jalaadaltu mai tere! 🩴
+      `,
       timestamp: new Date().toISOString()
     }
   });
