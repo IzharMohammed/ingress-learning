@@ -74,7 +74,7 @@ export default function Home() {
     setLoading(true);
     setError(null);
     try {
-      const apiUrl = process.env.NEXT_PUBLIC_API_URL ||'http://localhost:3001' || 'https://api.izhardev.me';
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'https://api.izhardev.me';
       const res = await fetch(`${apiUrl}/api/data`);
       if (!res.ok) {
         throw new Error(`Failed to fetch: ${res.status} ${res.statusText}`);
