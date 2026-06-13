@@ -1,0 +1,40 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: main-ingress
+  annotations:
+    # Optional but common: This annotation would rewrite the URL if needed.
+    # Since our backend already expects /api/data, we don't strictly need a rewrite here,
+    # but it's good to know annotations are where you put Nginx-specific configs!
+    # nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  ingressClassName: nginx  # Tells Kubernetes to specifically use the Ingress-Nginx controller
+  rules:
+    - http:
+        paths:
+          # Route 1: Backend API
+          - path: /api
+            pathType: Prefix
+            backend:
+              service:
+                name: backend-svc
+                port:
+                  number: 80 # This must match the 'port' defined in your backend-svc Service
+                  
+          # Route 2: Backend Healthcheck
+          - path: /health
+            pathType: Prefix
+            backend:
+              service:
+                name: backend-svc
+                port:
+                  number: 80
+
+          # Route 3: Frontend App (Catch-all)
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: frontend-svc
+                port:
+                  number: 80

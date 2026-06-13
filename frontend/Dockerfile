@@ -1,0 +1,19 @@
+FROM node:18-alpine
+
+WORKDIR /app
+
+# Copy package files and install dependencies
+COPY package*.json ./
+RUN npm install
+
+# Copy all other files
+COPY . .
+
+# Build the Next.js app
+RUN npm run build
+
+# Expose the port Next.js runs on by default
+EXPOSE 3000
+
+# Start the application
+CMD ["npm", "start"]

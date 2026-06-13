@@ -1,0 +1,65 @@
+# frontend-deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: frontend
+  template:
+    metadata:
+      labels:
+        app: frontend
+    spec:
+      containers:
+        - name: frontend
+          image: izhardev/ingress-frontend:latest   # Replace DOCKER_USERNAME with your Docker Hub username
+          ports:
+            - containerPort: 3000   # Next.js runs on port 3000 by default
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend-svc
+spec:
+  selector:
+    app: frontend
+  ports:
+    - port: 80              # The port the service exposes within the K8s cluster
+      targetPort: 3000      # The port the container is actively listening on
+
+
+---
+# backend-deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: backend
+  template:
+    metadata:
+      labels:
+        app: backend
+    spec:
+      containers:
+        - name: backend
+          image: izhardev/ingress-backend:latest    # Replace DOCKER_USERNAME with your Docker Hub username
+          ports:
+            - containerPort: 3001   # Express backend runs on port 3001 (configured earlier)
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend-svc
+spec:
+  selector:
+    app: backend
+  ports:
+    - port: 80              # The port the service exposes within the K8s cluster
+      targetPort: 3001      # The port the container is actively listening on
