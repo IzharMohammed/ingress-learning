@@ -13,7 +13,7 @@ export default function Home() {
     try {
       // In a real ingress setup, you might just fetch('/api/data')
       // For local development, we fallback to the Express port
-      const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001';
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://api.izhardev.me';
       const res = await fetch(`${apiUrl}/api/data`);
       if (!res.ok) {
         throw new Error(`Failed to fetch: ${res.status} ${res.statusText}`);
